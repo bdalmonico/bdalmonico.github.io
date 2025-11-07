@@ -3,7 +3,7 @@
 📍 Monforte de Lemos, España  
 📞 (+34) 611 794 796  
 📧 [b.dalmonico@gmail.com](mailto:b.dalmonico@gmail.com)  
-🌐 [LinkedIn](#) | [GitHub](#)
+🌐 [LinkedIn](https://www.linkedin.com/in/schossland/) | [GitHub](https://github.com/bdalmonico/)
 
 ---
 
