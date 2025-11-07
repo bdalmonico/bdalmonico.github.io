@@ -1,23 +1,25 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const header = document.querySelector(".header");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      header.style.backgroundColor = "#0d1117";
-      header.style.boxShadow = "0 2px 10px rgba(0,0,0,0.4)";
-    } else {
-      header.style.backgroundColor = "transparent";
-      header.style.boxShadow = "none";
-    }
+(function () {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const key = 'pref-theme';
+
+  // Inicializa tema
+  const saved = localStorage.getItem(key);
+  if (saved === 'light' || saved === 'dark') {
+    html.setAttribute('data-theme', saved);
+  } else {
+    // Preferencias del SO
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+  }
+
+  // Toggle de tema
+  btn.addEventListener('click', () => {
+    const current = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', current);
+    localStorage.setItem(key, current);
   });
 
-  // Efeito de animação suave ao rolar
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll("section").forEach(sec => observer.observe(sec));
-});
+  // Año en el footer
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();

@@ -1,75 +1,135 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portafolio de Bruno Dalmônico Schossland - Desarrollador Web y UX/UI Designer">
-  <title>Bruno Dalmônico Schossland | Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bruno Dalmonico Schossland — Proyecto Email Marketing (Frappe + Brevo)</title>
+  <meta name="description" content="Proyecto de integración Frappe + Brevo para orquestar y programar envíos transaccionales con scheduledAt." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  <header class="header">
-    <div class="logo">BDS<span>.</span></div>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#about">Sobre mí</a></li>
-        <li><a href="#projects">Proyectos</a></li>
-        <li><a href="#contact">Contacto</a></li>
-      </ul>
+  <header class="site-header container">
+    <a class="brand" href="#inicio">BDS</a>
+    <nav class="nav">
+      <a href="#proyecto">Proyecto</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#contacto">Contacto</a>
     </nav>
+    <button id="themeToggle" class="btn ghost" aria-label="Cambiar tema">🌓</button>
   </header>
 
-  <section class="hero">
-    <h1>Bruno Dalmônico Schossland</h1>
-    <p>Desarrollador Web | UX/UI | Innovación Digital</p>
-    <a href="#projects" class="btn">Ver Proyectos</a>
-  </section>
-
-  <section id="about" class="about">
-    <h2>🧠 Sobre Mí</h2>
-    <p>
-      Profesional con experiencia internacional en desarrollo web, comunicación y UX/UI. 
-      Enfocado en la creación de soluciones digitales innovadoras, escalables y centradas en la experiencia del usuario.
-    </p>
-  </section>
-
-  <section id="projects" class="projects">
-    <h2>🚀 Proyectos Actuales</h2>
-
-    <div class="project-card">
-      <h3>Integración Brevo (Sendinblue)</h3>
-      <p>
-        Aplicación web para automatizar campañas de email marketing mediante integración con la API de Brevo.
-        Incluye panel administrativo, dashboards UX/UI y seguimiento de métricas en tiempo real.
+  <main id="inicio" class="container">
+    <!-- Hero / Intro -->
+    <section class="hero card fade-in">
+      <h1>Proyecto Email Marketing — <span class="accent">Frappe + Brevo</span></h1>
+      <p class="lead">
+        Orquestación de campañas por <strong>Frappe Framework</strong> con envíos <strong>transaccionales de Brevo</strong>,
+        programados con <code>scheduledAt</code> y control de progreso en el ERP (DocType <em>EM Progreso Envío</em>).
       </p>
-      <p><strong>Stack:</strong> Python, Frappe, JavaScript, MySQL, Brevo API</p>
-      <a href="#" class="btn-secondary">Ver Detalles</a>
-    </div>
+      <div class="cta-row">
+        <a class="btn primary" href="#proyecto">Ver detalles</a>
+        <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Descargar CV</a>
+      </div>
+    </section>
 
-    <div class="project-card">
-      <h3>Portfolio Personal</h3>
+    <!-- Proyecto -->
+    <section id="proyecto" class="grid-2 gap-xl fade-in">
+      <article class="card">
+        <h2>Arquitectura general</h2>
+        <ul class="list">
+          <li><strong>Frappe</strong> es el orquestador: crea secuencias y calcula fechas por campaña.</li>
+          <li>Registros en <code>EM Progreso Envío</code> (destinatario, campaña, email, estado, fechas).</li>
+          <li><strong>Scheduler</strong> cada 2h: llama a <code>/v3/smtp/email</code> con <code>scheduledAt</code> por envío.</li>
+          <li>Estados: <em>Pendiente → Programado → Enviado → Error</em> con trazas y reintentos.</li>
+          <li>Sincronización opcional con Webhooks (entregado/abierto/bounce/click).</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Modos de secuencia</h2>
+        <p>La campaña define dos ejes:</p>
+        <ol class="list">
+          <li><strong>Tipo de envío:</strong> Semanal, Laboral, Personalizado (días seleccionados).</li>
+          <li><strong>Modo de secuencia:</strong>
+            <ul>
+              <li><em>Secuencia Absoluta</em>: siempre desde el primer email (p. ej., bienvenida).</li>
+              <li><em>Secuencia Sincronizada</em>: entra “en el día actual” (pierde anteriores).</li>
+              <li><em>Secuencia Híbrida</em>: sigue días configurados; empieza el próximo día válido.</li>
+            </ul>
+          </li>
+        </ol>
+        <p class="muted">Los envíos se programan en Brevo con ISO-8601 (UTC) en <code>scheduledAt</code>.</p>
+      </article>
+
+      <article class="card">
+        <h2>Integración Brevo</h2>
+        <ul class="list">
+          <li>Transactional: <code>POST /v3/smtp/email</code> (<em>sender</em>, <em>to</em>, <em>subject</em>, <em>htmlContent</em>, <em>scheduledAt</em>).</li>
+          <li>Contactos/Listas: uso de listas ya existentes cuando corresponde (sin crearlas automáticamente).</li>
+          <li>Empresas/Grupos: mapeo opcional a entidades Brevo, manteniendo el control en Frappe.</li>
+          <li>Plantillas: Doctype <em>EM Email Marketing</em> como fuente HTML/Asunto.</li>
+        </ul>
+      </article>
+
+      <aside class="card">
+        <h2>Checklist técnico</h2>
+        <ul class="list">
+          <li>API Key v3 en <code>site_config.json</code>.</li>
+          <li>Remitente verificado y dominio autenticado (SPF/DKIM/DMARC).</li>
+          <li>Fechas en UTC y normalización ISO-8601.</li>
+          <li>Logs de errores + reintentos con backoff.</li>
+          <li>Idempotencia: no reprogramar lo ya “Programado”.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- Sobre mí (desde el CV) -->
+    <section id="sobre-mi" class="card fade-in">
+      <h2>Sobre mí</h2>
       <p>
-        Sitio desarrollado en HTML, CSS y JavaScript con tema oscuro y animaciones interactivas. 
-        Implementado en GitHub Pages como carta de presentación profesional.
+        Profesional con experiencia internacional en <strong>diseño, comunicación y desarrollo de software</strong>,
+        especializado en soluciones web y apps centradas en la <strong>experiencia de usuario</strong>. Combino base
+        técnica en <strong>programación, UX/UI y marketing digital</strong> con alta capacidad de organización,
+        análisis y <strong>gestión de proyectos</strong> en entornos colaborativos. Orientado a la mejora continua y
+        metodologías ágiles. :contentReference[oaicite:2]{index=2}
       </p>
-      <p><strong>Stack:</strong> HTML5, CSS3, JS</p>
-      <a href="https://github.com/brunodalmonico" target="_blank" class="btn-secondary">Ver en GitHub</a>
-    </div>
-  </section>
+      <div class="chips">
+        <span class="chip">Python</span>
+        <span class="chip">Java</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">Dart</span>
+        <span class="chip">Vue.js</span>
+        <span class="chip">Flutter & FlutterFlow</span>
+        <span class="chip">Frappe Framework</span>
+        <span class="chip">MySQL</span>
+        <span class="chip">Git / CI-CD</span>
+        <span class="chip">UX/UI</span>
+        <span class="chip">Google Ads / Meta Ads</span>
+      </div>
+      <p class="muted">
+        Idiomas: Portugués (nativo), Español (C2), Inglés (B1), Gallego (B1). :contentReference[oaicite:3]{index=3}
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="cv.pdf" target="_blank" rel="noopener">Descargar CV</a>
+      </div>
+    </section>
 
-  <section id="contact" class="contact">
-    <h2>📬 Contacto</h2>
-    <p>¿Quieres colaborar o saber más sobre mi trabajo?</p>
-    <div class="contact-links">
-      <a href="mailto:b.dalmonico@gmail.com">b.dalmonico@gmail.com</a>
-      <a href="https://www.linkedin.com/in/brunodalmonico" target="_blank">LinkedIn</a>
-      <a href="https://github.com/brunodalmonico" target="_blank">GitHub</a>
-    </div>
-  </section>
+    <!-- Contacto -->
+    <section id="contacto" class="card fade-in">
+      <h2>Contacto</h2>
+      <ul class="contact">
+        <li>✉️ <a href="mailto:b.dalmonico@gmail.com">b.dalmonico@gmail.com</a></li>
+        <li>🐙 <a href="https://github.com/bdalmonico" target="_blank" rel="noopener">@bdalmonico</a></li>
+        <li>🌐 Dominio de pruebas: <code>bdalmonico.is-a.dev</code></li>
+      </ul>
+    </section>
+  </main>
 
-  <footer class="footer">
-    <p>© 2025 Bruno Dalmônico Schossland. Todos los derechos reservados.</p>
+  <footer class="site-footer container">
+    <small>© <span id="year"></span> Bruno Dalmonico Schossland — Proyecto Frappe + Brevo</small>
   </footer>
 
   <script src="script.js"></script>
