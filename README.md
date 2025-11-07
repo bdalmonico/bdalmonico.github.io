@@ -1,3 +1,23 @@
+# bdalmonico.is-a.dev 🌐
+
+Este repositório serve como base para hospedar o site de testes do domínio **bdalmonico.is-a.dev**, utilizado para validação e integração com **Brevo (Sendinblue)** dentro do projeto **Email Marketing** em **Frappe Framework**.
+
+## 🔧 Objetivo
+- Validar registros **DKIM**, **DMARC** e **CNAME** exigidos pela Brevo.
+- Testar autenticação e envios transacionais via API do Brevo.
+- Manter um ambiente público de verificação de domínio (GitHub Pages).
+
+## 📬 Domínio
+- Subdomínio: `bdalmonico.is-a.dev`
+- Gerenciado via [is-a.dev](https://is-a.dev)
+- Repositório PR: `https://github.com/is-a-dev/register`
+
+## 👨‍💻 Autor
+**@bdalmonico** — Desenvolvedor Python / Frappe / Email Marketing Automation
+
+
+
+
 📍 Monforte de Lemos, España  
 📞 (+34) 611 794 796  
 📧 [b.dalmonico@gmail.com](mailto:b.dalmonico@gmail.com)  
