@@ -1,15 +1,9 @@
 title: "Bruno Dalmônico Schossland"
 description: "Desarrollador Web | UX/UI | Innovación Digital"
-url: "https://brunodalmonico.github.io"
+url: "https://bdalmonico.github.io"
 baseurl: ""
 theme: minima
 
-author:
-  name: "Bruno Dalmônico Schossland"
-  email: "b.dalmonico@gmail.com"
-  location: "Monforte de Lemos, España"
-  linkedin: "https://www.linkedin.com/in/brunodalmonico"
-  github: "https://github.com/brunodalmonico"
 
 show_excerpts: false
 markdown: kramdown
@@ -20,8 +14,8 @@ header_pages:
 minima:
   skin: dark
   social_links:
-    - { platform: github,  user_url: "https://github.com/brunodalmonico" }
-    - { platform: linkedin, user_url: "https://www.linkedin.com/in/brunodalmonico" }
+    - { platform: github,  user_url: "https://github.com/bdalmonico" }
+    - { platform: linkedin, user_url: "https://www.linkedin.com/in/schossland" }
     - { platform: email, user_url: "mailto:b.dalmonico@gmail.com" }
 
 plugins:
@@ -34,5 +28,5 @@ seo:
   type: "profile"
   name: "Bruno Dalmônico Schossland"
   links:
-    - "https://www.linkedin.com/in/brunodalmonico"
-    - "https://github.com/brunodalmonico"
+    - "https://www.linkedin.com/in/schossland"
+    - "https://github.com/bdalmonico"
