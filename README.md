@@ -1,5 +1,3 @@
-# Bruno Dalmônico Schossland
-
 📍 Monforte de Lemos, España  
 📞 (+34) 611 794 796  
 📧 [b.dalmonico@gmail.com](mailto:b.dalmonico@gmail.com)  
